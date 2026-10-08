@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login — Mini SIEM Pro</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="login-wrap">
+  <div class="login-card">
+    <h1>🛡️ Mini SIEM <span>Pro</span></h1>
+    <p>SOC Monitoring Platform</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, msg in messages %}
+        <div class="flash {{ category }}">{{ msg }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <form method="POST">
+      <input type="text" name="username" placeholder="Username" required autofocus>
+      <input type="password" name="password" placeholder="Password" required>
+      <button class="btn btn-primary" type="submit">Sign In</button>
+    </form>
+
+    <div class="demo-creds">
+      <strong>Demo credentials</strong><br>
+      admin / admin123 (Admin)<br>
+      analyst / analyst456 (Analyst)
+    </div>
+  </div>
+</div>
+</body>
+</html>

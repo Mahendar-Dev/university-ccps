@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attestly — Blockchain Degree Attestation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">⛓</span>
+    <span class="brand-name">Attestly</span>
+    <span class="brand-sub">Degree Attestation Chain</span>
+  </div>
+  <div class="topbar-right">
+    <div class="chain-pulse" id="chainPulse">
+      <span class="pulse-dot"></span>
+      <span id="chainStatusText">Checking ledger…</span>
+    </div>
+    <div id="userBadge" class="user-badge hidden">
+      <span id="userName"></span>
+      <span id="userRole" class="role-chip"></span>
+      <button id="logoutBtn" class="btn-ghost">Log out</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ AUTH SCREEN ============ -->
+<section id="authScreen" class="auth-screen">
+  <div class="auth-card">
+    <div class="auth-head">
+      <h1>Verify a degree.<br>Trust the chain.</h1>
+      <p>A private ledger where universities issue credentials, employers verify them instantly, and nothing gets altered after the fact.</p>
+    </div>
+
+    <div class="auth-tabs">
+      <button class="tab-btn active" data-tab="login">Log in</button>
+      <button class="tab-btn" data-tab="register">Register a participant</button>
+    </div>
+
+    <form id="loginForm" class="auth-form">
+      <label>Email
+        <input type="email" id="loginEmail" required placeholder="you@organization.com">
+      </label>
+      <label>Password
+        <input type="password" id="loginPassword" required placeholder="••••••••">
+      </label>
+      <button type="submit" class="btn-primary">Enter the ledger</button>
+      <p class="auth-error" id="loginError"></p>
+    </form>
+
+    <form id="registerForm" class="auth-form hidden">
+      <label>Full name
+        <input type="text" id="regName" required placeholder="Dr. Aamir Khan">
+      </label>
+      <label>Organization (universities / employers)
+        <input type="text" id="regOrg" placeholder="Iqra University">
+      </label>
+      <label>Email
+        <input type="email" id="regEmail" required placeholder="you@organization.com">
+      </label>
+      <label>Password
+        <input type="password" id="regPassword" required placeholder="At least 8 characters">
+      </label>
+      <label>Role
+        <select id="regRole" required>
+          <option value="">Select a role…</option>
+          <option value="university">University (issues degrees)</option>
+          <option value="employer">Employer (verifies degrees)</option>
+          <option value="student">Student (views own records)</option>
+        </select>
+      </label>
+      <button type="submit" class="btn-primary">Issue my digital certificate</button>
+      <p class="auth-error" id="registerError"></p>
+      <p class="auth-success" id="registerSuccess"></p>
+    </form>
+
+    <div class="demo-creds">
+      <p class="demo-label">Demo accounts (seeded simulation)</p>
+      <div class="demo-grid">
+        <button class="demo-pill" data-email="admin@iqra.edu.pk" data-pass="University@123">🏛 University — Iqra</button>
+        <button class="demo-pill" data-email="hr@systemslimited.com" data-pass="Employer@123">💼 Employer — Systems Ltd</button>
+        <button class="demo-pill" data-email="ali.raza@student.edu" data-pass="Student@123">🎓 Student — Ali Raza</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ APP SHELL ============ -->
+<main id="appShell" class="app-shell hidden">
+
+  <nav class="side-nav">
+    <button class="nav-item active" data-view="overview">Overview</button>
+    <button class="nav-item" data-view="issue" id="navIssue">Issue degree</button>
+    <button class="nav-item" data-view="degrees">Degrees</button>
+    <button class="nav-item" data-view="verify" id="navVerify">Verify a degree</button>
+    <button class="nav-item" data-view="ledger">Ledger explorer</button>
+    <button class="nav-item" data-view="audit">Audit log</button>
+  </nav>
+
+  <section class="view-area">
+
+    <!-- OVERVIEW -->
+    <div class="view active" id="view-overview">
+      <div class="view-head">
+        <h2>Network overview</h2>
+        <p class="view-sub">Live counts pulled straight from the chain and the access logs.</p>
+      </div>
+      <div class="stat-grid" id="statGrid"></div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Latest blocks</h3>
+          <span class="panel-note">Most recent 6 transactions appended to the ledger</span>
+        </div>
+        <div class="block-strip" id="recentBlocks"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Chain integrity</h3>
+        </div>
+        <div id="integrityPanel" class="integrity-box">Checking…</div>
+      </div>
+    </div>
+
+    <!-- ISSUE DEGREE -->
+    <div class="view" id="view-issue">
+      <div class="view-head">
+        <h2>Issue a digital degree</h2>
+        <p class="view-sub">Available to university accounts. Each issuance is mined into a new block and hashed.</p>
+      </div>
+      <div class="panel form-panel">
+        <form id="issueForm">
+          <label>Student ID / Roll No.
+            <input type="text" id="issueStudentId" required placeholder="e.g. BSCS-2022-114">
+          </label>
+          <label>Student full name
+            <input type="text" id="issueStudentName" required placeholder="e.g. Ali Raza">
+          </label>
+          <label>Program / Degree title
+            <input type="text" id="issueProgram" required placeholder="e.g. BS Computer Science">
+          </label>
+          <label>Conferral date
+            <input type="date" id="issueDate" required>
+          </label>
+          <button type="submit" class="btn-primary">Mine this issuance to the chain</button>
+        </form>
+        <div id="issueResult" class="result-box hidden"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h3>Degrees you've issued</h3></div>
+        <div id="myDegreesTable" class="table-wrap"></div>
+      </div>
+    </div>
+
+    <!-- DEGREES LIST -->
+    <div class="view" id="view-degrees">
+      <div class="view-head">
+        <h2>Degrees on the chain</h2>
+        <p class="view-sub">Every issued credential, with current status.</p>
+      </div>
+      <div class="panel">
+        <div id="allDegreesTable" class="table-wrap"></div>
+      </div>
+    </div>
+
+    <!-- VERIFY -->
+    <div class="view" id="view-verify">
+      <div class="view-head">
+        <h2>Verify a degree</h2>
+        <p class="view-sub">Available to employer accounts. Submit the degree hash you were given, and we'll match it against the immutable ledger.</p>
+      </div>
+      <div class="panel form-panel">
+        <form id="verifyForm">
+          <label>Degree hash
+            <input type="text" id="verifyHash" required placeholder="Paste the degree hash here">
+          </label>
+          <label>Student ID (optional — cross-check)
+            <input type="text" id="verifyStudentId" placeholder="e.g. BSCS-2022-114">
+          </label>
+          <button type="submit" class="btn-primary">Run verification</button>
+        </form>
+        <div id="verifyResult" class="result-box hidden"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h3>Try the fraud-detection demo</h3></div>
+        <p class="panel-note" style="padding:0 24px 16px;">This hash was never issued on-chain — paste it above to see the system reject it.</p>
+        <code class="fake-hash" id="fakeHashSample">a1b2c3d4e5f6fake0000111122223333444455556666777788889999aaaabbb</code>
+      </div>
+    </div>
+
+    <!-- LEDGER EXPLORER -->
+    <div class="view" id="view-ledger">
+      <div class="view-head">
+        <h2>Ledger explorer</h2>
+        <p class="view-sub">Every block, hash-linked to the one before it. This is what makes the chain tamper-evident.</p>
+      </div>
+      <div class="panel">
+        <div class="block-chain-visual" id="fullChainVisual"></div>
+      </div>
+    </div>
+
+    <!-- AUDIT LOG -->
+    <div class="view" id="view-audit">
+      <div class="view-head">
+        <h2>Audit log</h2>
+        <p class="view-sub">Logins, issuances, revocations, and unauthorized access attempts — everything the system tracks outside the chain itself.</p>
+      </div>
+      <div class="panel">
+        <div id="auditTable" class="table-wrap"></div>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

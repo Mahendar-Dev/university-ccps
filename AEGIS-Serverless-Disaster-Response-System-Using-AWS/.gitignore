@@ -1,0 +1,21 @@
+# Ignore node_modules
+node_modules/
+build/
+
+# Ignore python cache
+__pycache__/
+*.pyc
+backend/package/
+
+# Ignore large zips
+*.zip
+backend.zip
+dummy_payload.zip
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# Env files
+.env

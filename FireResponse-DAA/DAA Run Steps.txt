@@ -1,0 +1,23 @@
+DAA
+
+Step 1 — Navigate to the project folder
+cd ~/Downloads/FireResponse-DAA
+(If that fails, run cd ~/Downloads then ls to see the actual folder name, and adjust)
+
+Step 2 — Create a virtual environment
+python -m venv venv
+
+Step 3 — Activate it
+source venv/Scripts/activate
+(Your prompt should now show (venv) at the start)
+
+Step 4 — Install dependencies
+pip install -r requirements.txt
+
+Step 5 — Run the app
+python -m streamlit run app.py
+
+You should see output ending with something like:
+Local URL: http://localhost:8501
+
+It should open your browser automatically. If not, copy that URL into your browser.

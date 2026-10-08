@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — Mini SIEM Pro{% endblock %}
+{% block content %}
+<div class="page-title">Security Dashboard</div>
+<div class="page-sub">Live overview · auto-refreshes every 15s</div>
+
+<div class="stat-grid">
+  <div class="stat-card"><div class="label">Total Threats</div><div class="value" id="s-total">{{ total }}</div></div>
+  <div class="stat-card critical"><div class="label">Critical</div><div class="value" id="s-critical">{{ critical }}</div></div>
+  <div class="stat-card high"><div class="label">High</div><div class="value" id="s-high">{{ high }}</div></div>
+  <div class="stat-card accent"><div class="label">Open Alerts</div><div class="value" id="s-open">{{ open_alerts }}</div></div>
+  <div class="stat-card"><div class="label">ML Anomalies</div><div class="value" id="s-anomalies" style="color: var(--medium);">{{ open_anomalies }}</div></div>
+</div>
+
+<div class="chart-grid">
+  <div class="panel">
+    <h3>Threat Type Distribution</h3>
+    <canvas id="typeChart" height="140"></canvas>
+  </div>
+  <div class="panel">
+    <h3>Severity Breakdown</h3>
+    <canvas id="sevChart" height="140"></canvas>
+  </div>
+</div>
+
+<div class="panel">
+  <h3>Recent Threat Activity</h3>
+  <table id="recentTable">
+    <thead><tr><th>Time</th><th>Type</th><th>Severity</th><th>Source IP</th><th>MITRE</th><th>Status</th></tr></thead>
+    <tbody>
+      {% for t in recent %}
+      <tr>
+        <td>{{ t.detected_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        <td>{{ t.threat_type }}</td>
+        <td><span class="badge {{ t.severity }}">{{ t.severity }}</span></td>
+        <td>{{ t.source_ip }}</td>
+        <td><span class="mitre-tag">{{ t.mitre_id }}</span></td>
+        <td><span class="badge {{ t.status }}">{{ t.status }}</span></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="empty-state">No threats detected yet. Generate sample logs from Settings to get started.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script>
+const typeCtx = document.getElementById('typeChart');
+const sevCtx = document.getElementById('sevChart');
+let typeChart, sevChart;
+
+const sevColors = { Critical:'#f85149', High:'#ff9f45', Medium:'#d2a8ff', Low:'#58a6ff' };
+
+function initCharts(typeData, sevData) {
+  typeChart = new Chart(typeCtx, {
+    type: 'bar',
+    data: { labels: Object.keys(typeData), datasets: [{ data: Object.values(typeData), backgroundColor: '#58a6ff' }] },
+    options: { plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#8b98a5', font:{size:10} } }, y: { ticks: { color: '#8b98a5' } } } }
+  });
+  sevChart = new Chart(sevCtx, {
+    type: 'doughnut',
+    data: { labels: Object.keys(sevData), datasets: [{ data: Object.values(sevData), backgroundColor: Object.keys(sevData).map(k => sevColors[k] || '#888') }] },
+    options: { plugins: { legend: { position: 'bottom', labels: { color: '#e6edf3' } } } }
+  });
+}
+
+async function refresh() {
+  const [stats, dist, sev, recent] = await Promise.all([
+    fetch('/api/stats').then(r => r.json()),
+    fetch('/api/threat_distribution').then(r => r.json()),
+    fetch('/api/severity_breakdown').then(r => r.json()),
+    fetch('/api/recent_threats').then(r => r.json()),
+  ]);
+
+  document.getElementById('s-total').textContent = stats.total;
+  document.getElementById('s-critical').textContent = stats.critical;
+  document.getElementById('s-high').textContent = stats.high;
+  document.getElementById('s-open').textContent = stats.open_alerts;
+  document.getElementById('s-anomalies').textContent = stats.open_anomalies;
+
+  if (!typeChart) { initCharts(dist, sev); }
+  else {
+    typeChart.data.labels = Object.keys(dist); typeChart.data.datasets[0].data = Object.values(dist); typeChart.update();
+    sevChart.data.labels = Object.keys(sev); sevChart.data.datasets[0].data = Object.values(sev);
+    sevChart.data.datasets[0].backgroundColor = Object.keys(sev).map(k => sevColors[k] || '#888');
+    sevChart.update();
+  }
+
+  const tbody = document.querySelector('#recentTable tbody');
+  if (recent.length) {
+    tbody.innerHTML = recent.map(t => `
+      <tr>
+        <td>${t.time}</td><td>${t.type}</td>
+        <td><span class="badge ${t.severity}">${t.severity}</span></td>
+        <td>${t.ip}</td><td><span class="mitre-tag">${t.mitre || ''}</span></td>
+        <td><span class="badge ${t.status}">${t.status}</span></td>
+      </tr>`).join('');
+  }
+}
+refresh();
+setInterval(refresh, 15000);
+</script>
+{% endblock %}

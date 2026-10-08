@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Alerts — Mini SIEM Pro{% endblock %}
+{% block content %}
+<div class="page-title">Active Alerts</div>
+<div class="page-sub">Critical &amp; High severity threats requiring action</div>
+
+<div class="panel">
+  <table>
+    <thead><tr><th>Time</th><th>Type</th><th>Severity</th><th>Source IP</th><th>MITRE</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody id="alertBody">
+      {% for a in alerts %}
+      <tr id="alert-{{ a.id }}">
+        <td>{{ a.detected_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        <td>{{ a.threat_type }}</td>
+        <td><span class="badge {{ a.severity }}">{{ a.severity }}</span></td>
+        <td>{{ a.source_ip }}</td>
+        <td><span class="mitre-tag" title="{{ a.mitre_name }}">{{ a.mitre_id }}</span></td>
+        <td><span class="badge {{ a.status }}" id="status-{{ a.id }}">{{ a.status }}</span></td>
+        <td>
+          {% if a.status == 'Open' %}
+          <button class="btn btn-sm" onclick="ackAlert({{ a.id }})">Acknowledge</button>
+          {% endif %}
+          <button class="btn btn-sm btn-primary" onclick="resolveAlert({{ a.id }})">Resolve</button>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7" class="empty-state">✅ No active Critical/High alerts. All clear.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="panel">
+  <h3>SOC SLA Reference</h3>
+  <table>
+    <thead><tr><th>Severity</th><th>Acknowledge Within</th><th>Resolve Within</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge Critical">Critical</span></td><td>15 minutes</td><td>4 hours</td></tr>
+      <tr><td><span class="badge High">High</span></td><td>1 hour</td><td>8 hours</td></tr>
+      <tr><td><span class="badge Medium">Medium</span></td><td>4 hours</td><td>24 hours</td></tr>
+      <tr><td><span class="badge Low">Low</span></td><td>24 hours</td><td>72 hours</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+async function ackAlert(id) {
+  await fetch(`/alerts/acknowledge/${id}`, { method: 'POST' });
+  document.getElementById(`status-${id}`).textContent = 'Acknowledged';
+  document.getElementById(`status-${id}`).className = 'badge Acknowledged';
+}
+async function resolveAlert(id) {
+  await fetch(`/alerts/resolve/${id}`, { method: 'POST' });
+  document.getElementById(`alert-${id}`).remove();
+}
+</script>
+{% endblock %}

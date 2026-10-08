@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Threat Logs — Mini SIEM Pro{% endblock %}
+{% block content %}
+<div class="page-title">Threat Logs</div>
+<div class="page-sub">{{ pagination.total }} total records</div>
+
+<form class="toolbar" method="GET">
+  <input type="text" name="q" placeholder="Search type or IP..." value="{{ q }}">
+  <select name="severity">
+    <option value="">All Severities</option>
+    {% for s in ['Critical','High','Medium','Low'] %}
+    <option value="{{ s }}" {{ 'selected' if sev==s }}>{{ s }}</option>
+    {% endfor %}
+  </select>
+  <button class="btn" type="submit">Filter</button>
+  <a class="btn btn-sm" href="{{ url_for('logs') }}">Reset</a>
+  <a class="btn btn-sm" href="{{ url_for('export_csv') }}" style="margin-left:auto;">⬇ Export CSV</a>
+  {% if session.get('role') == 'Admin' %}
+  <button class="btn btn-danger btn-sm" type="button" onclick="clearAll()">Clear All</button>
+  {% endif %}
+</form>
+
+<div class="panel">
+  <table>
+    <thead><tr><th>Time</th><th>Type</th><th>Severity</th><th>Source IP</th><th>MITRE</th><th>Status</th><th>Matched</th><th></th></tr></thead>
+    <tbody>
+      {% for t in pagination.items %}
+      <tr id="row-{{ t.id }}">
+        <td>{{ t.detected_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        <td>{{ t.threat_type }}</td>
+        <td><span class="badge {{ t.severity }}">{{ t.severity }}</span></td>
+        <td>{{ t.source_ip }}</td>
+        <td><span class="mitre-tag" title="{{ t.mitre_name }}">{{ t.mitre_id }}</span></td>
+        <td><span class="badge {{ t.status }}">{{ t.status }}</span></td>
+        <td style="max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ t.matched_text }}">{{ t.matched_text }}</td>
+        <td><button class="btn btn-sm btn-danger" onclick="delThreat({{ t.id }})">Delete</button></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="8" class="empty-state">No matching threats found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    {% if pagination.has_prev %}<a href="{{ url_for('logs', page=pagination.prev_num, q=q, severity=sev) }}">‹ Prev</a>{% endif %}
+    <span class="current">Page {{ pagination.page }} / {{ pagination.pages or 1 }}</span>
+    {% if pagination.has_next %}<a href="{{ url_for('logs', page=pagination.next_num, q=q, severity=sev) }}">Next ›</a>{% endif %}
+  </div>
+</div>
+
+<script>
+async function delThreat(id) {
+  if (!confirm('Delete this record?')) return;
+  await fetch(`/threats/delete/${id}`, { method: 'POST' });
+  document.getElementById(`row-${id}`).remove();
+}
+async function clearAll() {
+  if (!confirm('This will delete ALL threat records. Continue?')) return;
+  await fetch('/threats/clear_all', { method: 'POST' });
+  location.reload();
+}
+</script>
+{% endblock %}

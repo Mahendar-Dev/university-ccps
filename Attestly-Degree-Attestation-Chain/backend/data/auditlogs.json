@@ -1,0 +1,29 @@
+[
+  {
+    "id": "ed1acd4e-a236-4e04-939c-5f66b7695b5a",
+    "timestamp": 1784703285192,
+    "userId": "system",
+    "email": "seed-script",
+    "event": "SEED_ISSUANCE",
+    "success": true,
+    "detail": "5 degrees issued"
+  },
+  {
+    "id": "83626769-fa34-4e6d-a34a-87a0b542cb8d",
+    "timestamp": 1784703285205,
+    "userId": "e8154646-8aa8-4112-994c-27ba594341e7",
+    "email": "talent@devsinc.com",
+    "event": "UNAUTHORIZED_ATTEMPT",
+    "action": "fake_degree_verification",
+    "success": false,
+    "detail": "Fraud attempt — fabricated degree hash submitted"
+  },
+  {
+    "id": "400d5df7-f404-4fff-8d09-143eb449fc16",
+    "timestamp": 1784703469842,
+    "userId": "6faf2c90-c591-465d-bec7-f197a761d58e",
+    "email": "admin@iqra.edu.pk",
+    "event": "LOGIN_SUCCESS",
+    "success": true
+  }
+]

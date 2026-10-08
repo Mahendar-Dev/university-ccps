@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Threat Map — Mini SIEM Pro{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+<div class="page-title">Threat Map</div>
+<div class="page-sub">
+  Geographic distribution of source IPs
+  {% if not live %}
+  <span style="color: var(--high);">— offline simulation mode (see Settings). Internal/private-range IPs are excluded.</span>
+  {% endif %}
+</div>
+
+<div class="panel">
+  <div id="map" style="height: 480px; border-radius: 8px;"></div>
+</div>
+
+<div class="panel">
+  <table>
+    <thead><tr><th>Source IP</th><th>Location</th><th>Threat Count</th><th>Highest Severity</th></tr></thead>
+    <tbody>
+      {% for p in points %}
+      <tr>
+        <td>{{ p.ip }}</td>
+        <td>{{ p.city }}, {{ p.country }}</td>
+        <td>{{ p.count }}</td>
+        <td><span class="badge {{ p.severity }}">{{ p.severity }}</span></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" class="empty-state">No geolocatable threats yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script>
+const points = {{ points|tojson }};
+const map = L.map('map', { worldCopyJump: true }).setView([20, 0], 2);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors',
+  maxZoom: 8
+}).addTo(map);
+
+const sevColors = { Critical: '#f85149', High: '#ff9f45', Medium: '#d2a8ff', Low: '#58a6ff' };
+
+points.forEach(p => {
+  const radius = Math.min(8 + p.count * 2, 30);
+  L.circleMarker([p.lat, p.lon], {
+    radius: radius,
+    color: sevColors[p.severity] || '#888',
+    fillColor: sevColors[p.severity] || '#888',
+    fillOpacity: 0.5,
+    weight: 2
+  }).bindPopup(`<strong>${p.ip}</strong><br>${p.city}, ${p.country}<br>${p.count} threats · ${p.severity} max severity`)
+    .addTo(map);
+});
+</script>
+{% endblock %}

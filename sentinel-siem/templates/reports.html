@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Reports — Mini SIEM Pro{% endblock %}
+{% block content %}
+<div class="page-title">Reports</div>
+<div class="page-sub">Threat status &amp; severity summary</div>
+
+<a class="btn btn-primary" href="{{ url_for('download_report') }}" style="display:inline-block; margin-bottom:24px;">⬇ Download PDF Report</a>
+
+<div class="chart-grid">
+  <div class="panel">
+    <h3>Status Breakdown</h3>
+    <canvas id="statusChart" height="140"></canvas>
+  </div>
+  <div class="panel">
+    <h3>Severity Breakdown</h3>
+    <canvas id="sevChart" height="140"></canvas>
+  </div>
+</div>
+
+<div class="panel">
+  <h3>Top Source IPs</h3>
+  <table>
+    <thead><tr><th>Source IP</th><th>Threat Count</th></tr></thead>
+    <tbody>
+      {% for ip, count in top_ips %}
+      <tr><td>{{ ip }}</td><td>{{ count }}</td></tr>
+      {% else %}
+      <tr><td colspan="2" class="empty-state">No data yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script>
+new Chart(document.getElementById('statusChart'), {
+  type: 'bar',
+  data: {
+    labels: {{ by_status.keys()|list|tojson }},
+    datasets: [{ data: {{ by_status.values()|list|tojson }}, backgroundColor: ['#f85149','#ff9f45','#3fb950'] }]
+  },
+  options: { plugins: { legend: { display: false } }, scales: { y: { ticks: { color: '#8b98a5' } }, x: { ticks: { color: '#8b98a5' } } } }
+});
+new Chart(document.getElementById('sevChart'), {
+  type: 'doughnut',
+  data: {
+    labels: {{ by_severity.keys()|list|tojson }},
+    datasets: [{ data: {{ by_severity.values()|list|tojson }}, backgroundColor: ['#f85149','#ff9f45','#d2a8ff','#58a6ff'] }]
+  },
+  options: { plugins: { legend: { position: 'bottom', labels: { color: '#e6edf3' } } } }
+});
+</script>
+{% endblock %}

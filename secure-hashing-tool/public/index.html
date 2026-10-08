@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mahendar Dev — Secure Hashing Tool</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ===================== AUTH SCREEN ===================== -->
+<div id="authScreen" class="auth-screen">
+  <div class="auth-card">
+    <div class="eyebrow">Mahendar Dev</div>
+    <h1 class="auth-title">SECURE <span>// HASHING TOOL</span></h1>
+    <p class="auth-sub">Sign in to generate hashes and keep a private history of everything you've hashed.</p>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Log in</button>
+      <button class="auth-tab" data-tab="register">Create account</button>
+    </div>
+
+    <form id="loginForm" class="auth-form">
+      <label class="field-label">Username</label>
+      <input type="text" id="loginUsername" autocomplete="username" required>
+      <label class="field-label">Password</label>
+      <input type="password" id="loginPassword" autocomplete="current-password" required>
+      <div class="auth-error" id="loginError"></div>
+      <button type="submit" class="primary-btn">Log in</button>
+    </form>
+
+    <form id="registerForm" class="auth-form hidden">
+      <label class="field-label">Choose a username</label>
+      <input type="text" id="registerUsername" autocomplete="username" placeholder="3-20 chars, letters/numbers/_" required>
+      <label class="field-label">Choose a password</label>
+      <input type="password" id="registerPassword" autocomplete="new-password" placeholder="At least 6 characters" required>
+      <div class="auth-error" id="registerError"></div>
+      <button type="submit" class="primary-btn">Create account</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== MAIN APP ===================== -->
+<div id="appScreen" class="wrap hidden">
+
+  <div class="top-bar">
+    <div>
+      <div class="eyebrow">Mahendar Dev</div>
+      <h1>SECURE <span>// HASHING TOOL</span></h1>
+    </div>
+    <div class="user-box">
+      <span id="usernameDisplay"></span>
+      <button id="logoutBtn" class="ghost-btn">Log out</button>
+    </div>
+  </div>
+
+  <div class="sub">Type a message or drop in a file. Hashing runs entirely in your browser — only the resulting digest is saved to your history.</div>
+
+  <div class="panel">
+    <label class="field-label" for="msg">Message</label>
+    <textarea id="msg" placeholder="Start typing to hash..."></textarea>
+
+    <div class="row-between">
+      <label class="file-btn">
+        📁 Hash a file instead
+        <input type="file" id="fileInput" style="display:none">
+      </label>
+      <span id="fileName"></span>
+      <button class="clear-btn" id="clearBtn">clear</button>
+    </div>
+
+    <div class="avalanche-wrap">
+      <div class="avalanche-label">
+        <span class="dim-label">AVALANCHE (SHA-256, per keystroke)</span>
+        <span id="flipCount">0% bits flipped</span>
+      </div>
+      <div class="avalanche-grid" id="avalanche"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="selector-label">Choose which hashes to generate</div>
+    <div class="chip-row" id="chipRow"></div>
+  </div>
+
+  <div class="panel">
+    <div class="algos" id="algoList"></div>
+  </div>
+
+  <div class="panel">
+    <div class="row-between" style="margin-top:0;">
+      <div class="selector-label" style="margin-bottom:0;">Your hash history</div>
+      <button class="clear-btn" id="clearHistoryBtn">clear all</button>
+    </div>
+    <div id="historyList" class="history-list"></div>
+  </div>
+
+  <footer>DIGESTS COMPUTED LOCALLY VIA WEB CRYPTO API + LOCAL MD5 · HISTORY STORED ON YOUR ACCOUNT</footer>
+</div>
+
+<script src="hash-engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

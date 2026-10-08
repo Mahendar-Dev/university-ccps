@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block title %}Settings — Mini SIEM Pro{% endblock %}
+{% block content %}
+<div class="page-title">Settings</div>
+<div class="page-sub">System configuration &amp; detection signatures</div>
+
+<div class="panel">
+  <h3>System Status</h3>
+  <p>✅ Detection engine online &middot; {{ signatures|length }} active signatures &middot; DB connected</p>
+  <button class="btn btn-primary" onclick="genSamples()">Generate 20 Sample Log Lines</button>
+  <span id="genResult" style="margin-left:10px; color: var(--text-dim); font-size: 13px;"></span>
+</div>
+
+<div class="panel">
+  <h3>Detection Layers</h3>
+  <table>
+    <thead><tr><th>Layer</th><th>Status</th><th>Toggle</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Signature Matching (regex + MITRE ATT&amp;CK)</td>
+        <td><span class="badge Resolved">Always On</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>ML Anomaly Detection (Isolation Forest)</td>
+        <td id="ml-status"><span class="badge {{ 'Resolved' if ml_enabled else 'Open' }}">{{ 'Enabled' if ml_enabled else 'Disabled' }}</span></td>
+        <td><button class="btn btn-sm" onclick="toggleFlag('ml')">Toggle</button></td>
+      </tr>
+      <tr>
+        <td>Critical Alert Notifications (webhook/email)</td>
+        <td id="notif-status"><span class="badge {{ 'Resolved' if notif_enabled else 'Open' }}">{{ 'Enabled' if notif_enabled else 'Disabled' }}</span></td>
+        <td><button class="btn btn-sm" onclick="toggleFlag('notifications')">Toggle</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="color: var(--text-dim); font-size: 12px; margin-top: 12px;">
+    Webhook: {{ 'configured' if webhook_configured else 'not configured (set SIEM_WEBHOOK_URL env var)' }} &middot;
+    SMTP email: {{ 'configured' if smtp_configured else 'not configured (set SIEM_SMTP_HOST / SIEM_SMTP_USER / SIEM_SMTP_PASS / SIEM_ALERT_EMAIL_TO)' }}
+  </p>
+</div>
+
+<div class="panel">
+  <h3>Recent Notification Attempts</h3>
+  <table>
+    <thead><tr><th>Time</th><th>Threat Type</th><th>Severity</th><th>Channel</th><th>Result</th></tr></thead>
+    <tbody>
+      {% for n in notifications %}
+      <tr>
+        <td>{{ n.sent_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        <td>{{ n.threat_type }}</td>
+        <td><span class="badge {{ n.severity }}">{{ n.severity }}</span></td>
+        <td>{{ n.channel }}</td>
+        <td>{{ '✅ ' if n.ok else '⏭ ' }}{{ n.detail }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="empty-state">No Critical alerts triggered a notification attempt yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="panel">
+  <h3>Active Detection Signatures ({{ signatures|length }})</h3>
+  <table>
+    <thead><tr><th>Threat Type</th><th>Severity</th><th>MITRE ATT&amp;CK</th><th>Pattern</th></tr></thead>
+    <tbody>
+      {% for t, sev, pat, mid, mname in signatures %}
+      <tr class="sig-row">
+        <td>{{ t }}</td>
+        <td><span class="badge {{ sev }}">{{ sev }}</span></td>
+        <td><span class="mitre-tag" title="{{ mname }}">{{ mid }}</span></td>
+        <td><code>{{ pat }}</code></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="panel">
+  <h3>Audit Log — Last 30 Actions</h3>
+  <table>
+    <thead><tr><th>Time</th><th>User</th><th>Action</th></tr></thead>
+    <tbody>
+      {% for a in audit %}
+      <tr>
+        <td>{{ a.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        <td>{{ a.username }}</td>
+        <td>{{ a.action }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="3" class="empty-state">No audit entries yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if session.get('role') == 'Admin' %}
+<div class="panel" style="border-color: var(--critical);">
+  <h3 style="color: var(--critical);">⚠️ Danger Zone</h3>
+  <p style="color: var(--text-dim); font-size: 13px;">Permanently deletes every threat record in the database. This cannot be undone.</p>
+  <button class="btn btn-danger" onclick="clearDb()">Clear Entire Threat Database</button>
+</div>
+{% endif %}
+
+<script>
+async function genSamples() {
+  const res = await fetch('/settings/generate_samples', { method: 'POST' });
+  const data = await res.json();
+  document.getElementById('genResult').textContent = `Generated ${data.count} log lines — check Dashboard/Logs.`;
+}
+async function clearDb() {
+  if (!confirm('This will permanently delete ALL threat data. Are you sure?')) return;
+  await fetch('/settings/clear_db', { method: 'POST' });
+  location.reload();
+}
+async function toggleFlag(kind) {
+  const res = await fetch(`/settings/toggle_${kind}`, { method: 'POST' });
+  const data = await res.json();
+  const el = document.getElementById(kind === 'ml' ? 'ml-status' : 'notif-status');
+  el.innerHTML = `<span class="badge ${data.enabled ? 'Resolved' : 'Open'}">${data.enabled ? 'Enabled' : 'Disabled'}</span>`;
+}
+</script>
+{% endblock %}

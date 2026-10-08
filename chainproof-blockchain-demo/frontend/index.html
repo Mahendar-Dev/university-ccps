@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chainproof — connected to a real backend</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 38 38" fill="none">
+        <rect x="1" y="1" width="15" height="15" rx="3" stroke="#35D399" stroke-width="2"/>
+        <rect x="22" y="1" width="15" height="15" rx="3" stroke="#35D399" stroke-width="2"/>
+        <rect x="1" y="22" width="15" height="15" rx="3" stroke="#F2B84B" stroke-width="2"/>
+        <line x1="16" y1="8.5" x2="22" y2="8.5" stroke="#35D399" stroke-width="2"/>
+        <line x1="8.5" y1="16" x2="8.5" y2="22" stroke="#F2B84B" stroke-width="2" stroke-dasharray="2 2"/>
+      </svg>
+      <div>
+        <h1>Chainproof</h1>
+        <div class="tagline">// frontend + real backend + API key + blockchain</div>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="field">
+        <label for="apiUrl">Backend URL</label>
+        <input id="apiUrl" type="text" value="http://localhost:4000" />
+      </div>
+      <div class="field">
+        <label for="apiKey">API Key</label>
+        <input id="apiKey" type="password" placeholder="paste your x-api-key" />
+      </div>
+      <div class="field">
+        <label>&nbsp;</label>
+        <button class="btn btn-primary" id="connectBtn">Connect</button>
+      </div>
+    </div>
+  </header>
+
+  <p class="explain">
+    This version doesn't compute hashes in your browser — every block, mine, and tamper request goes to a real
+    <b>Node.js/Express backend</b> over its REST API, guarded by an <b>API key</b> you supply below. The backend
+    holds the actual blockchain, does the proof-of-work mining, and persists the chain to disk.
+  </p>
+
+  <div class="status-banner" id="statusBanner">
+    <span class="status-dot" id="statusDot"></span>
+    <span id="statusText">Not connected yet — enter your API key and click Connect.</span>
+  </div>
+
+  <div class="chain" id="chain"></div>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>

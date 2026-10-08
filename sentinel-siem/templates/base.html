@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}Mini SIEM Pro{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">🛡️ Mini SIEM <span>Pro</span></div>
+    <nav>
+      <a href="{{ url_for('dashboard') }}" class="{{ 'active' if request.endpoint=='dashboard' }}">📊 Dashboard</a>
+      <a href="{{ url_for('logs') }}" class="{{ 'active' if request.endpoint=='logs' }}">📋 Threat Logs</a>
+      <a href="{{ url_for('alerts') }}" class="{{ 'active' if request.endpoint=='alerts' }}">🚨 Alerts</a>
+      <a href="{{ url_for('anomalies') }}" class="{{ 'active' if request.endpoint=='anomalies' }}">🧠 Anomalies (ML)</a>
+      <a href="{{ url_for('threat_map') }}" class="{{ 'active' if request.endpoint=='threat_map' }}">🗺️ Threat Map</a>
+      <a href="{{ url_for('reports') }}" class="{{ 'active' if request.endpoint=='reports' }}">📈 Reports</a>
+      <a href="{{ url_for('settings') }}" class="{{ 'active' if request.endpoint=='settings' }}">⚙️ Settings</a>
+    </nav>
+    <div class="user-box">
+      Logged in as <strong>{{ session.get('username') }}</strong>
+      <div class="role-badge">{{ session.get('role') }}</div>
+      <div style="margin-top:10px;"><a href="{{ url_for('logout') }}">Log out</a></div>
+    </div>
+  </aside>
+  <main class="main">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, msg in messages %}
+        <div class="flash {{ category }}">{{ msg }}</div>
+      {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

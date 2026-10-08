@@ -1,0 +1,135 @@
+[
+  {
+    "userId": "6faf2c90-c591-465d-bec7-f197a761d58e",
+    "name": "Dr. Aamir Khan",
+    "email": "admin@iqra.edu.pk",
+    "role": "university",
+    "orgName": "Iqra University",
+    "salt": "c307f97727bd2be10a3416e5e5a84ca5",
+    "passwordHash": "a44f9cef00818903376dab8868e5f16b275a389d93f0bf8afbc47765015ad6642e5d1bbff5b1e711270ef6521080f540e8c62a4debf0fb27af792b5628ecc85c",
+    "certificate": {
+      "userId": "6faf2c90-c591-465d-bec7-f197a761d58e",
+      "role": "university",
+      "name": "Dr. Aamir Khan",
+      "issuedAt": 1784703284289
+    },
+    "publicKey": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDByiHkc005X0HgIcOpiFJFCdQJ\ntz+BR3rvQQxFvnWRTdbNJXKs/zFr1wVln9OPot6LLBld4LxmOc+QfupLYON6lbDJ\nBJl5ho9cLX9xELLkMPSrkc0zCnKXTALPVq04AQFxdHlzriVYhfHOiDHkog6ycn7r\n1lipGwGP8izyfX36HwIDAQAB\n-----END PUBLIC KEY-----\n",
+    "fingerprint": "2638f3744d80845c",
+    "createdAt": 1784703284295,
+    "status": "ACTIVE"
+  },
+  {
+    "userId": "d3c27124-292a-4837-ba46-ecb8d012ccfb",
+    "name": "Dr. Sara Malik",
+    "email": "admin@nust.edu.pk",
+    "role": "university",
+    "orgName": "NUST",
+    "salt": "b4a8acef290a319925381d0c9773f693",
+    "passwordHash": "1fd2be73298e396e78967f2e29f0e9397436fb59d6e79fcdddc45d06683e1bf8e1de020c7eea6288d7d7b7bf63a46827edb64413113e86668a82f647f30e8aa8",
+    "certificate": {
+      "userId": "d3c27124-292a-4837-ba46-ecb8d012ccfb",
+      "role": "university",
+      "name": "Dr. Sara Malik",
+      "issuedAt": 1784703284457
+    },
+    "publicKey": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDAQqOkqLvIOI8FRL0Oda7V8XoY\nSwn8/4+X4x12Fr9IYJkRt+h51SpawKDjZyANW0VyyydbA4wH55UwtC3v0a/UGVT2\nnQYGWlbqJDMHsQIQF9oAsSnUItgrQUGx8JhC54lMn4WDwGJ1mZOAv9aUrngLCEUW\nn3P/DbM+r7C3GnqZ6QIDAQAB\n-----END PUBLIC KEY-----\n",
+    "fingerprint": "be4d2e81e2b601d4",
+    "createdAt": 1784703284458,
+    "status": "ACTIVE"
+  },
+  {
+    "userId": "3271abfd-3017-4be9-86d8-604eccabc613",
+    "name": "Ali Raza",
+    "email": "ali.raza@student.edu",
+    "role": "student",
+    "orgName": "Ali Raza",
+    "salt": "709c90b6a6e5d4113a3c804c0c2f5701",
+    "passwordHash": "57282fb73c267395daf3b26ded83886b2223e0f9bc7cd57cc144ff3854a0b36bce96e82b0fd5975f46121f46da6785354e22894a88f24e7ef6783d4d97b9ace6",
+    "certificate": {
+      "userId": "3271abfd-3017-4be9-86d8-604eccabc613",
+      "role": "student",
+      "name": "Ali Raza",
+      "issuedAt": 1784703284560
+    },
+    "publicKey": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCjnG7m1PGCYwKoeVmqLRqg69U6\nki8/Ko3z51fldARi09dYDRlFi9xcCV2wWw43L2kQmdkk9WNeUIIL4nglhgkXnEhf\nvwy3jOSt9ttqUWFhTvivbNNCvo95AgLlNyB/NaFaTUVloyvoYCFWdJPpqycK/jdb\ndVzOtkaxsdaqoHcbKQIDAQAB\n-----END PUBLIC KEY-----\n",
+    "fingerprint": "302eb52a368e40d0",
+    "createdAt": 1784703284560,
+    "status": "ACTIVE"
+  },
+  {
+    "userId": "f56d9d1c-f917-4f20-8044-05e0a0cf81dc",
+    "name": "Hina Tariq",
+    "email": "hina.tariq@student.edu",
+    "role": "student",
+    "orgName": "Hina Tariq",
+    "salt": "c3f319863bb5b46bc8d4a20ff5951796",
+    "passwordHash": "d1fa6c3ad975cdaa0d5b474acd2830e0ba93b40f60c5efb830b429270b34d0f07de17e1e0df4d7ad95b03824d04773054b6eb583af080653c26b4498d2cb2f7d",
+    "certificate": {
+      "userId": "f56d9d1c-f917-4f20-8044-05e0a0cf81dc",
+      "role": "student",
+      "name": "Hina Tariq",
+      "issuedAt": 1784703284722
+    },
+    "publicKey": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDHCsqw96Fa6vap9eqtm7vR5xQr\namSfzpMy9Czp+eVs/nTMRoEhO0yo0LoUK7zmmTCBF00q+mnBU6w5wMez78zT2zGM\nXngJ8VrU9vUxdyAykzNb64733esjr8wVPADbOFnndT5XKtvVKBIqIb7sJe8l3PgD\n8VFNpNfcOxRb52UQywIDAQAB\n-----END PUBLIC KEY-----\n",
+    "fingerprint": "0aa19b565242d375",
+    "createdAt": 1784703284724,
+    "status": "ACTIVE"
+  },
+  {
+    "userId": "1de571e7-4b25-4c95-82d4-9d486ba4a4dd",
+    "name": "Bilal Ahmed",
+    "email": "bilal.ahmed@student.edu",
+    "role": "student",
+    "orgName": "Bilal Ahmed",
+    "salt": "2eb13bd500f56bfe7aff19ff9c94c874",
+    "passwordHash": "94a5321c55d96b2ca3b1a5fff5d18ba55832194a6c2f61e47667bf0307efdaf68bd0a1247219d8786f45a2c2de5e275f2295047395d2ea5f762f4d10c0af24b9",
+    "certificate": {
+      "userId": "1de571e7-4b25-4c95-82d4-9d486ba4a4dd",
+      "role": "student",
+      "name": "Bilal Ahmed",
+      "issuedAt": 1784703284860
+    },
+    "publicKey": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDQaplCr2zwQTosECWKRsYFH117\ncBVkwBCNdiwTE77zjx2BbTtnFSnb4q2jEIKz4GFALYU1wacbQv9b4O8U0dsNm+1I\nCCUrCQgrYcsHGq0e1+ag6vUafCWADJnWQandW+RzjNiJPc1dqJgWgWEl6j2hBUi1\ns+i8VV45gC+hFuo4CwIDAQAB\n-----END PUBLIC KEY-----\n",
+    "fingerprint": "7d3ab7297e9b7065",
+    "createdAt": 1784703284861,
+    "status": "ACTIVE"
+  },
+  {
+    "userId": "524e7049-a960-4cc7-9f9e-e206028859b7",
+    "name": "HR Dept",
+    "email": "hr@systemslimited.com",
+    "role": "employer",
+    "orgName": "Systems Limited",
+    "salt": "7f0c599ed8f80892109bff68bc1b12ae",
+    "passwordHash": "99b2742933819c0d51bccca93176a76a4b09b73364c39637d7e467cd79ecdff81f3e45509b35260ba665aa93d7e00515c2ad213d87a2bd4701a27812a03d23bd",
+    "certificate": {
+      "userId": "524e7049-a960-4cc7-9f9e-e206028859b7",
+      "role": "employer",
+      "name": "HR Dept",
+      "issuedAt": 1784703285005
+    },
+    "publicKey": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCuTm4yBdFfM64RGK80Cbusq9X6\nxCov9xffQIYljyYikgpz7iAF4C6CRBEAv1xynLdwUKuIFSaIPR7MII8SWUCEhpC3\nbFXYzL4vDRgCSnlVSdT/0SLTBqzCQxCs+3fDec91WoclVT9jT+Vpep9Bfq2cNsfb\nVVBzJhQLkde6FqGz3QIDAQAB\n-----END PUBLIC KEY-----\n",
+    "fingerprint": "06d9a2c64d7ef3f6",
+    "createdAt": 1784703285006,
+    "status": "ACTIVE"
+  },
+  {
+    "userId": "e8154646-8aa8-4112-994c-27ba594341e7",
+    "name": "Talent Team",
+    "email": "talent@devsinc.com",
+    "role": "employer",
+    "orgName": "Devsinc",
+    "salt": "6fc2ce5c562ce2c04784bd9202e50a54",
+    "passwordHash": "61e06e43495678e6b03c444fb57c721373a0eb30719625bd9642ce890424764f031ebaa8830654dd99c8e4183a03ec0d6aa436048b2210aacbe64a7a89a6b46e",
+    "certificate": {
+      "userId": "e8154646-8aa8-4112-994c-27ba594341e7",
+      "role": "employer",
+      "name": "Talent Team",
+      "issuedAt": 1784703285165
+    },
+    "publicKey": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQD9XwwJB1tH0Orx1SglUnytJ2Qs\nUFX6sIYGJ6H/4vo2e6NeZx0NSBCb0iab9IrLH4edvEPfLdqYmdwnVvolTEbEay7k\nnzm1+E3+CpuKgjeqFaqkq4mIqqZbF5yb1MHH+HednJLs1SL3+0gc+T5rudwzx5Bm\nBmo6m2IbRnWbHz8ocwIDAQAB\n-----END PUBLIC KEY-----\n",
+    "fingerprint": "7e4ca06a30f2d0f0",
+    "createdAt": 1784703285166,
+    "status": "ACTIVE"
+  }
+]

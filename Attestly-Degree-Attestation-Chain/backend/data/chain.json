@@ -1,0 +1,173 @@
+[
+  {
+    "index": 0,
+    "timestamp": 1784703284169,
+    "type": "GENESIS",
+    "payload": {
+      "message": "Degree Attestation Chain Genesis Block"
+    },
+    "previousHash": "0",
+    "nonce": 27,
+    "hash": "002a0d746814ba03280d32d593c3401a064ffc7694d18205413b0bdfb526c3c2"
+  },
+  {
+    "index": 1,
+    "timestamp": 1784703285170,
+    "type": "DEGREE_ISSUANCE",
+    "payload": {
+      "degreeId": "86b1af88-d860-45dc-9823-43ace21c6a9f",
+      "degreeHash": "74f231d4d6f3c0a27f9028169972863888b9691e8cc21517c55b4a785208c0a7",
+      "universityId": "6faf2c90-c591-465d-bec7-f197a761d58e",
+      "universityName": "Iqra University",
+      "studentId": "3271abfd-3017-4be9-86d8-604eccabc613",
+      "studentName": "Ali Raza",
+      "program": "BS Computer Science",
+      "degreeDate": "2025-06-15",
+      "issuedBy": "admin@iqra.edu.pk",
+      "status": "ACTIVE"
+    },
+    "previousHash": "002a0d746814ba03280d32d593c3401a064ffc7694d18205413b0bdfb526c3c2",
+    "nonce": 329,
+    "hash": "007e9fafa8c0848dc287a31b54062f7f60d14637eade0d8b75a31e5a9cb11ccb"
+  },
+  {
+    "index": 2,
+    "timestamp": 1784703285175,
+    "type": "DEGREE_ISSUANCE",
+    "payload": {
+      "degreeId": "0481e5d5-6842-4a89-acf2-94cc8b2b8de0",
+      "degreeHash": "d0b3e04640fea9b369dfe199b8953d55477426d077dd43da9168145e6e5484a4",
+      "universityId": "6faf2c90-c591-465d-bec7-f197a761d58e",
+      "universityName": "Iqra University",
+      "studentId": "f56d9d1c-f917-4f20-8044-05e0a0cf81dc",
+      "studentName": "Hina Tariq",
+      "program": "BS Cyber Security",
+      "degreeDate": "2025-06-15",
+      "issuedBy": "admin@iqra.edu.pk",
+      "status": "ACTIVE"
+    },
+    "previousHash": "007e9fafa8c0848dc287a31b54062f7f60d14637eade0d8b75a31e5a9cb11ccb",
+    "nonce": 216,
+    "hash": "0034efc67c281d01aa0af366131768693f23526462fa890218082bb00e9a9b9a"
+  },
+  {
+    "index": 3,
+    "timestamp": 1784703285181,
+    "type": "DEGREE_ISSUANCE",
+    "payload": {
+      "degreeId": "fc7fc1a1-c722-4789-883a-0a8d50a676e7",
+      "degreeHash": "9f8845ee13017ccdc0110ef77db638fd283a1aeb0365adea889a587df0b892c1",
+      "universityId": "6faf2c90-c591-465d-bec7-f197a761d58e",
+      "universityName": "Iqra University",
+      "studentId": "1de571e7-4b25-4c95-82d4-9d486ba4a4dd",
+      "studentName": "Bilal Ahmed",
+      "program": "BS Software Engineering",
+      "degreeDate": "2025-06-15",
+      "issuedBy": "admin@iqra.edu.pk",
+      "status": "ACTIVE"
+    },
+    "previousHash": "0034efc67c281d01aa0af366131768693f23526462fa890218082bb00e9a9b9a",
+    "nonce": 281,
+    "hash": "000e5b214266089db5a36dc9ed84624bb33fa8f5ef46a7fc49f5ae8ad2b049d8"
+  },
+  {
+    "index": 4,
+    "timestamp": 1784703285184,
+    "type": "DEGREE_ISSUANCE",
+    "payload": {
+      "degreeId": "6f3a6b3a-c4c1-4434-9965-0507f400c912",
+      "degreeHash": "9aab2032991ee21c14689ae38bd18127b340304b29626bef0b70218f8296cb39",
+      "universityId": "d3c27124-292a-4837-ba46-ecb8d012ccfb",
+      "universityName": "NUST",
+      "studentId": "3271abfd-3017-4be9-86d8-604eccabc613",
+      "studentName": "Ali Raza",
+      "program": "MS Data Science",
+      "degreeDate": "2026-01-20",
+      "issuedBy": "admin@nust.edu.pk",
+      "status": "ACTIVE"
+    },
+    "previousHash": "000e5b214266089db5a36dc9ed84624bb33fa8f5ef46a7fc49f5ae8ad2b049d8",
+    "nonce": 283,
+    "hash": "005bb93b3b1926a75c82fa8b0c62c58665f062ca39a7552d1d0e41a949057822"
+  },
+  {
+    "index": 5,
+    "timestamp": 1784703285188,
+    "type": "DEGREE_ISSUANCE",
+    "payload": {
+      "degreeId": "572a97f2-c39d-470f-b10e-a1b5e5777e2c",
+      "degreeHash": "edb0224f1e4d800a8cc666e4b890b0cd3612942eb8b2ae28d62a12151f46c86f",
+      "universityId": "d3c27124-292a-4837-ba46-ecb8d012ccfb",
+      "universityName": "NUST",
+      "studentId": "f56d9d1c-f917-4f20-8044-05e0a0cf81dc",
+      "studentName": "Hina Tariq",
+      "program": "MS Information Security",
+      "degreeDate": "2026-01-20",
+      "issuedBy": "admin@nust.edu.pk",
+      "status": "ACTIVE"
+    },
+    "previousHash": "005bb93b3b1926a75c82fa8b0c62c58665f062ca39a7552d1d0e41a949057822",
+    "nonce": 29,
+    "hash": "0056fb6b129c0e98be32e88e802ae36f0077a4e3ca03aec22d3c550aa11452c6"
+  },
+  {
+    "index": 6,
+    "timestamp": 1784703285196,
+    "type": "DEGREE_VERIFICATION",
+    "payload": {
+      "degreeHash": "74f231d4d6f3c0a27f9028169972863888b9691e8cc21517c55b4a785208c0a7",
+      "studentIdSubmitted": "3271abfd-3017-4be9-86d8-604eccabc613",
+      "requestedBy": "hr@systemslimited.com",
+      "result": "VALID",
+      "reason": "VALID"
+    },
+    "previousHash": "0056fb6b129c0e98be32e88e802ae36f0077a4e3ca03aec22d3c550aa11452c6",
+    "nonce": 312,
+    "hash": "0088104d25750e05198818802aff34fdf64dbc37381598518ca510e3125f390f"
+  },
+  {
+    "index": 7,
+    "timestamp": 1784703285199,
+    "type": "DEGREE_VERIFICATION",
+    "payload": {
+      "degreeHash": "d0b3e04640fea9b369dfe199b8953d55477426d077dd43da9168145e6e5484a4",
+      "studentIdSubmitted": "f56d9d1c-f917-4f20-8044-05e0a0cf81dc",
+      "requestedBy": "talent@devsinc.com",
+      "result": "VALID",
+      "reason": "VALID"
+    },
+    "previousHash": "0088104d25750e05198818802aff34fdf64dbc37381598518ca510e3125f390f",
+    "nonce": 248,
+    "hash": "007b494c43d16984b45175cfbd1155710095c180c925f1124694b73b1acc8d2a"
+  },
+  {
+    "index": 8,
+    "timestamp": 1784703285202,
+    "type": "DEGREE_VERIFICATION",
+    "payload": {
+      "degreeHash": "9aab2032991ee21c14689ae38bd18127b340304b29626bef0b70218f8296cb39",
+      "studentIdSubmitted": "3271abfd-3017-4be9-86d8-604eccabc613",
+      "requestedBy": "hr@systemslimited.com",
+      "result": "VALID",
+      "reason": "VALID"
+    },
+    "previousHash": "007b494c43d16984b45175cfbd1155710095c180c925f1124694b73b1acc8d2a",
+    "nonce": 12,
+    "hash": "00bf64886ff8a704ada985d6ec016831cb8aa81e09fa829b5c9ce1033946e2ad"
+  },
+  {
+    "index": 9,
+    "timestamp": 1784703285203,
+    "type": "DEGREE_VERIFICATION",
+    "payload": {
+      "degreeHash": "a1b2c3d4e5f6fake0000111122223333444455556666777788889999aaaabbb",
+      "studentIdSubmitted": "1de571e7-4b25-4c95-82d4-9d486ba4a4dd",
+      "requestedBy": "talent@devsinc.com",
+      "result": "INVALID",
+      "reason": "NO_MATCHING_RECORD"
+    },
+    "previousHash": "00bf64886ff8a704ada985d6ec016831cb8aa81e09fa829b5c9ce1033946e2ad",
+    "nonce": 218,
+    "hash": "00b3b85ad88692da9378b8ffd7b1381200e92ab0bde1f4eb7410c188ea13dbff"
+  }
+]

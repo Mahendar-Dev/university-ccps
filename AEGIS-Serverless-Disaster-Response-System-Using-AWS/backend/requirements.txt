@@ -1,0 +1,7 @@
+fastapi
+mangum
+boto3
+pydantic
+exceptiongroup
+sniffio
+google-generativeai

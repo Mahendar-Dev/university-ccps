@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Anomalies — Mini SIEM Pro{% endblock %}
+{% block content %}
+<div class="page-title">Behavioral Anomalies</div>
+<div class="page-sub">Flagged by the Isolation Forest ML layer — activity that's statistically unusual, even without a matching signature</div>
+
+<div class="panel">
+  <p style="color: var(--text-dim); font-size: 13px; margin-top:0;">
+    Each source IP is scored on 4 features over the current log batch: total events,
+    failed logins, distinct usernames touched, and signature hits. IPs that sit far
+    from the norm on this feature set are flagged — this can catch slow brute-force,
+    account enumeration, or unusual traffic bursts that no single regex rule matches.
+  </p>
+  <table>
+    <thead><tr><th>Source IP</th><th>Anomaly Score</th><th>Events</th><th>Failed Logins</th><th>Distinct Users</th><th>Signature Hits</th><th>Detected</th><th></th></tr></thead>
+    <tbody>
+      {% for a in anomalies %}
+      <tr id="anom-{{ a.id }}">
+        <td>{{ a.source_ip }}</td>
+        <td><strong style="color: var(--high);">{{ "%.3f"|format(a.anomaly_score) }}</strong></td>
+        <td>{{ a.event_count }}</td>
+        <td>{{ a.failed_login_count }}</td>
+        <td>{{ a.distinct_users }}</td>
+        <td>{{ a.signature_hits }}</td>
+        <td>{{ a.detected_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        <td><button class="btn btn-sm" onclick="dismiss({{ a.id }})">Dismiss</button></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="8" class="empty-state">No anomalies flagged yet. Needs at least 6 distinct source IPs in a batch to train — generate more sample logs.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script>
+async function dismiss(id) {
+  await fetch(`/anomalies/dismiss/${id}`, { method: 'POST' });
+  document.getElementById(`anom-${id}`).remove();
+}
+</script>
+{% endblock %}

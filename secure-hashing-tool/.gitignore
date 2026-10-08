@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Database
+server/data.sqlite
+server/data.sqlite-*
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# Environment variables
+.env
+server/.env
+
+# Logs
+npm-debug.log*
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor folders
+.vscode/
+.idea/
+*.swp
+
+# Build artifacts
+dist/
+build/
+
+# npm
+package-lock.json
