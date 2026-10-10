@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Projects-10-blue?style=for-the-badge" alt="Projects">
+  <img src="https://img.shields.io/badge/Projects-11-blue?style=for-the-badge" alt="Projects">
   <img src="https://img.shields.io/badge/Focus-Cybersecurity-red?style=for-the-badge" alt="Focus">
   <img src="https://img.shields.io/badge/Status-Completed-success?style=for-the-badge" alt="Status">
 </p>
@@ -53,6 +53,7 @@
 |---|---|---|
 | 🎓 [**Attestly-Degree-Attestation-Chain**](./Attestly-Degree-Attestation-Chain) | Degree attestation system on a custom blockchain. Universities issue degrees, students share them, employers verify them, with access control and PDF certificates. | ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) |
 | 🔗 [**chainproof-blockchain-demo**](./chainproof-blockchain-demo) | Small blockchain demo showing how tampering with a block breaks chain validity. | ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) |
+| 💰 [**Vaultap**](./Vaultap) | Full-stack play-to-earn blockchain app. Users tap to earn coins, complete quests and referrals, connect a MetaMask wallet, and convert coins into real VLTC tokens on the Sepolia testnet. | ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white) ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white) ![Ethereum](https://img.shields.io/badge/Ethereum-3C3C3D?style=flat-square&logo=ethereum&logoColor=white) |
 
 ### ☁️ Cloud
 
