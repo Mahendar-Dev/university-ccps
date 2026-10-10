@@ -1,0 +1,138 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(uuid())
+  username       String   @unique
+  email          String?  @unique
+  passwordHash   String?  @map("password_hash")
+  walletAddress  String?  @map("wallet_address")
+  referralCode   String   @unique @map("referral_code")
+  referredBy     String?  @map("referred_by")
+  energy         Int      @default(1000)
+  energyMax      Int      @default(1000) @map("energy_max")
+  isActive       Boolean  @default(true) @map("is_active")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  coinBalance    CoinBalance?
+  transactions   Transaction[]
+  userQuests     UserQuest[]
+  referralsMade  Referral[]     @relation("ReferrerRelation")
+  referredAs     Referral?      @relation("ReferredRelation")
+
+  @@map("users")
+}
+
+model CoinBalance {
+  userId         String   @id @map("user_id")
+  balance        BigInt   @default(0)
+  totalEarned    BigInt   @default(0) @map("total_earned")
+  totalConverted BigInt   @default(0) @map("total_converted")
+  usdtBalance    Decimal  @default(0) @map("usdt_balance") @db.Decimal(20, 6)
+  updatedAt      DateTime @default(now()) @map("updated_at")
+
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("coin_balances")
+}
+
+model Transaction {
+  id           String   @id @default(uuid())
+  userId       String   @map("user_id")
+  type         String
+  amount       BigInt
+  balanceAfter BigInt   @map("balance_after")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  user         User     @relation(fields: [userId], references: [id])
+
+  @@map("transactions")
+}
+
+model Quest {
+  id            String      @id @default(uuid())
+  title         String
+  description   String?
+  type          String
+  rewardAmount  BigInt      @map("reward_amount")
+  targetValue   Int?        @map("target_value")
+  resetInterval String?     @map("reset_interval")
+  isActive      Boolean     @default(true) @map("is_active")
+  createdAt     DateTime    @default(now()) @map("created_at")
+
+  userQuests    UserQuest[]
+
+  @@map("quests")
+}
+
+model UserQuest {
+  id          String    @id @default(uuid())
+  userId      String    @map("user_id")
+  questId     String    @map("quest_id")
+  progress    Int       @default(0)
+  status      String    @default("pending")
+  lastResetAt DateTime  @default(now()) @map("last_reset_at")
+  claimedAt   DateTime? @map("claimed_at")
+
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quest       Quest     @relation(fields: [questId], references: [id])
+
+  @@map("user_quests")
+}
+
+model Referral {
+  id           String   @id @default(uuid())
+  referrerId   String   @map("referrer_id")
+  referredId   String   @unique @map("referred_id")
+  level        Int      @default(1)
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  referrer     User     @relation("ReferrerRelation", fields: [referrerId], references: [id])
+  referred     User     @relation("ReferredRelation", fields: [referredId], references: [id])
+
+  @@map("referrals")
+}
+
+model ReferralEarning {
+  id            String   @id @default(uuid())
+  referrerId    String   @map("referrer_id")
+  sourceUserId  String   @map("source_user_id")
+  amount        BigInt
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("referral_earnings")
+}
+
+model Conversion {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  coinAmount  BigInt   @map("coin_amount")
+  usdtAmount  Decimal  @map("usdt_amount") @db.Decimal(20, 6)
+  feePercent  Decimal  @map("fee_percent") @db.Decimal(5, 2)
+  feeAmount   Decimal  @map("fee_amount") @db.Decimal(20, 6)
+  onChainTxHash String? @map("on_chain_tx_hash")
+  status      String   @default("completed")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("conversions")
+}
+
+model Withdrawal {
+  id              String   @id @default(uuid())
+  userId          String   @map("user_id")
+  toWalletAddress String   @map("to_wallet_address")
+  usdtAmount      Decimal  @map("usdt_amount") @db.Decimal(20, 6)
+  feeAmount       Decimal  @map("fee_amount") @db.Decimal(20, 6)
+  txHash          String?  @map("tx_hash")
+  status          String   @default("completed")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  @@map("withdrawals")
+}
